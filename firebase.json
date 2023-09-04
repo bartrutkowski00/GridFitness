@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "public": "dist/grid-fitness",
+      "target": "GridFitness",
+      "frameworksBackend": {}
+    }
+  ]
+}

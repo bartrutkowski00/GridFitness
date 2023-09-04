@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "gridfitnessapp": {
+      "hosting": {
+        "GridFitness": [
+          "gridfitnessapp"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "gridfitnessapp"
+  }
+}
