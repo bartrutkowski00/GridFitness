@@ -46,5 +46,12 @@ export class AuthServiceService {
     localStorage.removeItem('user');
   }
 
-  autoLogIn() {}
+  autoLogIn() {
+    const user = localStorage.getItem('user');
+    if (!user) {
+      this._user.next(null);
+    } else {
+      this._user.next(JSON.parse(String(user)));
+    }
+  }
 }

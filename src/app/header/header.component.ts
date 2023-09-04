@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../auth/auth-service.service';
 import { User } from '../auth/user.model';
 
@@ -7,8 +7,9 @@ import { User } from '../auth/user.model';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   constructor(private auth: AuthServiceService) {
+    auth.autoLogIn();
     auth._user?.subscribe((user) => {
       this.user = user;
     });
@@ -19,5 +20,9 @@ export class HeaderComponent {
   }
   onLogIn() {
     this.auth.googleSingIn();
+  }
+
+  ngOnInit() {
+    this.auth.autoLogIn();
   }
 }

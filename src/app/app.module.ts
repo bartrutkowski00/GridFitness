@@ -16,9 +16,10 @@ import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
 import { HeaderComponent } from './header/header.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, ModalComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
