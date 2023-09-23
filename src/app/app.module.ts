@@ -17,9 +17,10 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { WorkoutConfigComponent } from './workout-config/workout-config.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, HomeComponent],
+  declarations: [AppComponent, HeaderComponent, HomeComponent, WorkoutConfigComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
