@@ -1,1 +1,89 @@
-<p>workout-config works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h1>Add or edit workouts</h1>
+    </div>
+  </div>
+  <hr />
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <form [formGroup]="addWorkoutForm">
+        <p
+          class="text-center rounded"
+          style="border: 2px solid black; font-size: large; font-weight: bold"
+        >
+          Select or create workout
+        </p>
+
+        <p class="text-center fs-4">Add exercises</p>
+
+        <label for="exercisename">Exercise Name</label>
+        <input id="exercisename" type="text" class="form-control" />
+
+        <label for="setCount">Set count</label>
+        <input id="setCount" type="number" class="form-control" />
+
+        <label for="movementType">Movement type</label>
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          id="movementType"
+        >
+          <option selected>Other</option>
+          <option value="1">Horizontal push</option>
+          <option value="2">Vertical push</option>
+          <option value="3">Horizontal pull</option>
+          <option value="4">Vertical pull</option>
+          <option value="5">Squat</option>
+          <option value="6">Bend</option>
+        </select>
+        <label for="accesory" style="margin-top: 17px"
+          >Accesory - won't be counted for overall training volume
+        </label>
+        <input
+          id="accesory"
+          type="checkbox"
+          style="height: 30px; width: 30px; margin-left: 12px; margin-top: 17px"
+          class="form-check-input"
+        />
+        <div style="margin-top: 1cm">
+          <button class="btn btn-primary" style="margin: 7px">
+            Save and add new excercise
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <h4>Training list</h4>
+      <hr />
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          style="cursor: pointer"
+          *ngFor="let training of sampleWorkouts; let i = index"
+          (click)="onClickTraining(training)"
+        >
+          {{ training.workoutName }}
+          <div>
+            <ul class="list-group" *ngIf="selectedWorkout === training">
+              <li
+                class="list-group-item"
+                *ngFor="let exercise of sampleWorkouts[i].exercises"
+              >
+                {{ exercise.exerciseName }}
+                <button style="float: right" class="btn btn-danger">
+                  Delete exercise
+                </button>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <p>tutaj będzie podsumowanie</p>
+    </div>
+  </div>
+</div>

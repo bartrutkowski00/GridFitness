@@ -18,10 +18,17 @@ import { provideFunctions, getFunctions } from '@angular/fire/functions';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { WorkoutConfigComponent } from './workout-config/workout-config.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, HomeComponent, WorkoutConfigComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    HomeComponent,
+    WorkoutConfigComponent,
+  ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
