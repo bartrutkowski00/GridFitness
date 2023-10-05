@@ -37,7 +37,7 @@
           <option value="3">Horizontal pull</option>
           <option value="4">Vertical pull</option>
           <option value="5">Squat</option>
-          <option value="6">Bend</option>
+          <option value="6">Hinge</option>
         </select>
         <label for="accesory" style="margin-top: 17px"
           >Accesory - won't be counted for overall training volume
@@ -72,10 +72,31 @@
                 class="list-group-item"
                 *ngFor="let exercise of sampleWorkouts[i].exercises"
               >
-                {{ exercise.exerciseName }}
-                <button style="float: right" class="btn btn-danger">
-                  Delete exercise
-                </button>
+                <div class="row">
+                  <div class="col-4">
+                    <p>
+                      {{ exercise.exerciseName }}
+                    </p>
+                  </div>
+                  <div class="col-3">
+                    <p>{{ exercise.setCount }} sets</p>
+                  </div>
+                  <div class="col-3">
+                    <p
+                      [ngStyle]="{
+                        color: getMvmntTypeStyle(exercise.movementType),
+                        'font-weight': 'bolder'
+                      }"
+                    >
+                      {{ exercise.movementType }}
+                    </p>
+                  </div>
+                  <div class="col-2">
+                    <button style="float: right" class="btn btn-danger">
+                      Delete
+                    </button>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>

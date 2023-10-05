@@ -15,6 +15,26 @@ export class WorkoutConfigComponent implements OnInit {
     this.selectedWorkout = training;
     console.log(this.selectedWorkout);
   }
+  getMvmntTypeStyle(movementType: string) {
+    switch (movementType) {
+      case 'Horizontal push':
+        return 'green';
+      case 'Vertical push':
+        return 'blue';
+      case 'Horizontal pull':
+        return 'purple';
+      case 'Vertical pull':
+        return 'magenta';
+      case 'Squat':
+        return 'brown';
+      case 'Hinge':
+        return 'grey';
+      case 'Other':
+        return 'pink';
+      default:
+        return '';
+    }
+  }
   sampleWorkouts: workoutBlueprint[] = [
     {
       workoutCreator: 'Tesciarz',
