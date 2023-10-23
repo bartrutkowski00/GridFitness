@@ -48,6 +48,8 @@ export class WorkoutService {
     this.workouts.slice()
   );
 
+  addWorkout() {}
+
   getWorkouts() {
     return this.workouts.slice();
   }

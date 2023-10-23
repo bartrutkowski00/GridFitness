@@ -74,12 +74,16 @@
           *ngFor="let training of workouts; let i = index"
           (click)="onClickTraining(training)"
         >
+          <button class="btn btn-danger" style="font-size: small">
+            Delete training
+          </button>
           {{ training.workoutName }}
           <div>
             <ul class="list-group" *ngIf="selectedWorkout === training">
               <li
                 class="list-group-item"
                 *ngFor="let exercise of workouts[i].exercises; let o = index"
+                style="border-color: rgb(155, 21, 21)"
               >
                 <div class="row">
                   <div class="col-4">
@@ -102,11 +106,11 @@
                   </div>
                   <div class="col-2">
                     <button
-                      style="float: right"
+                      style="float: right; font-size: small"
                       class="btn btn-danger"
                       (click)="onDeleteExercise(i, o)"
                     >
-                      Delete
+                      Delete exercise
                     </button>
                   </div>
                 </div>
@@ -115,9 +119,20 @@
           </div>
         </li>
       </ul>
+      <button
+        class="btn btn-info"
+        style="font-size: small; margin-left: 0.45cm; margin-top: 0.1cm"
+      >
+        Add Training
+      </button>
     </div>
     <div class="col-md-4">
-      <p>tutaj będzie podsumowanie</p>
+      <div class="row wrapUp HorizontalPush">Horizontal push</div>
+      <div class="row wrapUp VerticalPush">Vertical push</div>
+      <div class="row wrapUp HorizontalPull">Horizontal pull</div>
+      <div class="row wrapUp VerticalPull">Vertical pull</div>
+      <div class="row wrapUp Squat">Squat</div>
+      <div class="row wrapUp Hinge">Hinge</div>
     </div>
   </div>
 </div>

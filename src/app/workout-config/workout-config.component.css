@@ -1,0 +1,29 @@
+.wrapUp {
+  font-size: larger;
+  font-weight: bold;
+}
+.HorizontalPush {
+  color: green;
+}
+.VerticalPush {
+  color: blue;
+}
+
+.HorizontalPull {
+  color: purple;
+}
+
+.VerticalPull {
+  color: magenta;
+}
+
+.Squat {
+  color: brown;
+}
+
+.Hinge {
+  color: gray;
+}
+.Other {
+  color: pink;
+}
