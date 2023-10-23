@@ -9,27 +9,35 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4">
-      <form [formGroup]="addWorkoutForm">
-        <p
-          class="text-center rounded"
-          style="border: 2px solid black; font-size: large; font-weight: bold"
-        >
-          Select or create workout
-        </p>
-
+      <form
+        [formGroup]="addWorkoutForm"
+        *ngIf="selectedWorkout"
+        (ngSubmit)="onSubmitExeForm()"
+      >
         <p class="text-center fs-4">Add exercises</p>
 
         <label for="exercisename">Exercise Name</label>
-        <input id="exercisename" type="text" class="form-control" />
+        <input
+          id="exercisename"
+          formControlName="exercisename"
+          type="text"
+          class="form-control"
+        />
 
         <label for="setCount">Set count</label>
-        <input id="setCount" type="number" class="form-control" />
+        <input
+          id="setCount"
+          type="number"
+          class="form-control"
+          formControlName="setCount"
+        />
 
         <label for="movementType">Movement type</label>
         <select
           class="form-select"
           aria-label="Default select example"
           id="movementType"
+          formControlName="movementType"
         >
           <option selected>Other</option>
           <option value="1">Horizontal push</option>
@@ -47,6 +55,7 @@
           type="checkbox"
           style="height: 30px; width: 30px; margin-left: 12px; margin-top: 17px"
           class="form-check-input"
+          formControlName="accesory"
         />
         <div style="margin-top: 1cm">
           <button class="btn btn-primary" style="margin: 7px">
@@ -62,7 +71,7 @@
         <li
           class="list-group-item"
           style="cursor: pointer"
-          *ngFor="let training of sampleWorkouts; let i = index"
+          *ngFor="let training of workouts; let i = index"
           (click)="onClickTraining(training)"
         >
           {{ training.workoutName }}
@@ -70,7 +79,7 @@
             <ul class="list-group" *ngIf="selectedWorkout === training">
               <li
                 class="list-group-item"
-                *ngFor="let exercise of sampleWorkouts[i].exercises"
+                *ngFor="let exercise of workouts[i].exercises; let o = index"
               >
                 <div class="row">
                   <div class="col-4">
@@ -92,7 +101,11 @@
                     </p>
                   </div>
                   <div class="col-2">
-                    <button style="float: right" class="btn btn-danger">
+                    <button
+                      style="float: right"
+                      class="btn btn-danger"
+                      (click)="onDeleteExercise(i, o)"
+                    >
                       Delete
                     </button>
                   </div>
