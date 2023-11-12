@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
 import { workoutBlueprint } from './workoutModal';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
+import { AuthServiceService } from '../auth/auth-service.service';
 
 @Injectable({ providedIn: 'root' })
 export class WorkoutService {
+  constructor(private auth: AuthServiceService) {
+    auth._user.pipe(take(1)).subscribe((user) => {
+      this.user = user;
+    });
+  }
+  user: any;
   workouts: workoutBlueprint[] = [
     {
       workoutCreator: 'Tesciarz',
@@ -48,7 +55,17 @@ export class WorkoutService {
     this.workouts.slice()
   );
 
-  addWorkout() {}
+  addWorkout(trainingName: string) {
+    if (trainingName !== undefined) {
+      this.workouts.push({
+        workoutCreator: this.user.displayName,
+        workoutName: trainingName,
+        workoutId: this.workouts[this.workouts.length - 1].workoutId + 1,
+        exercises: [],
+      });
+      this.workoutsChange.next(this.workouts.slice());
+    }
+  }
 
   getWorkouts() {
     return this.workouts.slice();

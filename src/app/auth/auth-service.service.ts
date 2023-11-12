@@ -53,5 +53,7 @@ export class AuthServiceService {
     } else {
       this._user.next(JSON.parse(String(user)));
     }
+
+    console.log(this._user);
   }
 }

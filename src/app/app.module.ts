@@ -19,6 +19,10 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { WorkoutConfigComponent } from './workout-config/workout-config.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ModalComponent } from './shared/modal/modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     HomeComponent,
     WorkoutConfigComponent,
+    ModalComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -37,6 +42,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),
     provideFunctions(() => getFunctions()),
+    BrowserAnimationsModule,
+    MatDialogModule,
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],

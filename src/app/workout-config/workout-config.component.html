@@ -8,7 +8,7 @@
 </div>
 <div class="container">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <form
         [formGroup]="addWorkoutForm"
         *ngIf="selectedWorkout"
@@ -64,22 +64,26 @@
         </div>
       </form>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <h4>Training list</h4>
+      <p style="color: gray" *ngIf="!selectedWorkout">
+        To add exercise click on training
+      </p>
       <hr />
       <ul class="list-group">
         <li
+          [ngClass]="{ Selected: training === selectedWorkout }"
           class="list-group-item"
           style="cursor: pointer"
           *ngFor="let training of workouts; let i = index"
           (click)="onClickTraining(training)"
         >
-          <button class="btn btn-danger" style="font-size: small">
+          <button class="btn btn-danger" style="font-size: small; margin: 4px">
             Delete training
           </button>
           {{ training.workoutName }}
           <div>
-            <ul class="list-group" *ngIf="selectedWorkout === training">
+            <ul class="list-group">
               <li
                 class="list-group-item"
                 *ngFor="let exercise of workouts[i].exercises; let o = index"
@@ -122,17 +126,29 @@
       <button
         class="btn btn-info"
         style="font-size: small; margin-left: 0.45cm; margin-top: 0.1cm"
+        (click)="onAddTraining()"
       >
         Add Training
       </button>
     </div>
-    <div class="col-md-4">
-      <div class="row wrapUp HorizontalPush">Horizontal push</div>
-      <div class="row wrapUp VerticalPush">Vertical push</div>
-      <div class="row wrapUp HorizontalPull">Horizontal pull</div>
-      <div class="row wrapUp VerticalPull">Vertical pull</div>
-      <div class="row wrapUp Squat">Squat</div>
-      <div class="row wrapUp Hinge">Hinge</div>
+
+    <div class="col-md-3">
+      <h3 style="font-weight: bolder">Set count</h3>
+
+      <div class="row wrapUp HorizontalPush">
+        Horizontal push {{ movementsCount[0] }}
+      </div>
+      <div class="row wrapUp VerticalPush">
+        Vertical push {{ movementsCount[1] }}
+      </div>
+      <div class="row wrapUp HorizontalPull">
+        Horizontal pull {{ movementsCount[2] }}
+      </div>
+      <div class="row wrapUp VerticalPull">
+        Vertical pull {{ movementsCount[3] }}
+      </div>
+      <div class="row wrapUp Squat">Squat {{ movementsCount[4] }}</div>
+      <div class="row wrapUp Hinge">Hinge {{ movementsCount[5] }}</div>
     </div>
   </div>
 </div>

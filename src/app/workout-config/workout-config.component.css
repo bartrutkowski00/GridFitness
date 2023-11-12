@@ -27,3 +27,6 @@
 .Other {
   color: pink;
 }
+.Selected {
+  background-color: rgb(148, 243, 215);
+}

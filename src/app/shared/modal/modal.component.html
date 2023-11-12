@@ -1,0 +1,21 @@
+<div class="container" style="padding: 1cm">
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="workoutName">
+        <label for="workoutName">Workout Name</label>
+        <input
+          id="workoutName"
+          formControlName="workoutName"
+          type="text"
+          class="form-control"
+        />
+      </form>
+      <button class="btn btn-primary" style="margin: 5px" (click)="onSubmit()">
+        Add
+      </button>
+      <button class="btn btn-danger" style="margin: 5px" (click)="close()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
