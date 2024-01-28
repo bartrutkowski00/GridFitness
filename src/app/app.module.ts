@@ -13,7 +13,12 @@ import {
 } from '@angular/fire/analytics';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import {
+  provideFirestore,
+  getFirestore,
+  firestoreInstance$,
+  FirestoreModule,
+} from '@angular/fire/firestore';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -23,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ModalComponent } from './shared/modal/modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ModalDeleteTrainingComponent } from './shared/modal-delete-training/modal-delete-training.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +37,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent,
     WorkoutConfigComponent,
     ModalComponent,
+    ModalDeleteTrainingComponent,
   ],
   imports: [
     ReactiveFormsModule,

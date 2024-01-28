@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { workoutBlueprint } from './workoutModal';
 import { BehaviorSubject, take } from 'rxjs';
 import { AuthServiceService } from '../auth/auth-service.service';
+import { Firestore } from '@angular/fire/firestore';
 
 @Injectable({ providedIn: 'root' })
 export class WorkoutService {
-  constructor(private auth: AuthServiceService) {
+  constructor(private auth: AuthServiceService, private firestore: Firestore) {
     auth._user.pipe(take(1)).subscribe((user) => {
       this.user = user;
     });
@@ -56,15 +57,29 @@ export class WorkoutService {
   );
 
   addWorkout(trainingName: string) {
+    let nWorkoutId: number;
+    if (this.workouts.length === 0) {
+      nWorkoutId = 1;
+    } else {
+      nWorkoutId = this.workouts[this.workouts.length - 1].workoutId + 1;
+    }
+
     if (trainingName !== undefined) {
       this.workouts.push({
         workoutCreator: this.user.displayName,
         workoutName: trainingName,
-        workoutId: this.workouts[this.workouts.length - 1].workoutId + 1,
+        workoutId: nWorkoutId,
         exercises: [],
       });
       this.workoutsChange.next(this.workouts.slice());
     }
+  }
+
+  deleteWorkout(selectedWorkout: any) {
+    let id = this.workouts.indexOf(selectedWorkout);
+
+    this.workouts.splice(id, 1);
+    this.workoutsChange.next(this.workouts.slice());
   }
 
   getWorkouts() {
@@ -92,4 +107,6 @@ export class WorkoutService {
     });
     this.workoutsChange.next(this.workouts.slice());
   }
+
+  saveToDatabase() {}
 }

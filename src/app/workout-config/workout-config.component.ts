@@ -5,6 +5,7 @@ import { WorkoutService } from '../shared/workout.service';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ModalComponent } from '../shared/modal/modal.component';
+import { ModalDeleteTrainingComponent } from '../shared/modal-delete-training/modal-delete-training.component';
 
 @Component({
   selector: 'app-workout-config',
@@ -45,6 +46,28 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
       this.workoutsService.addWorkout(data);
     });
   }
+
+  onDeleteTraining() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    const dialogRefTrain = this.dialog.open(
+      ModalDeleteTrainingComponent,
+      dialogConfig
+    );
+
+    this.trainingSub = dialogRefTrain.afterClosed().subscribe((data) => {
+      if (data === true) {
+        this.workoutsService.deleteWorkout(
+          this.selectedWorkout
+        );
+        this.selectedWorkout = undefined;
+      }
+    });
+  }
+
   onSubmitExeForm() {
     const getMovement = function (movementType: string) {
       switch (Number(movementType)) {

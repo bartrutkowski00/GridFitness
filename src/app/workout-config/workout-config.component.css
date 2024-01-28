@@ -1,3 +1,32 @@
+@keyframes highlightAnimation {
+  from {
+    background-color: initial;
+  }
+  to {
+    background-color: rgb(187, 186, 186);
+  }
+}
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 3px #675cfc;
+  }
+  50% {
+    box-shadow: 0 0 12px #0f13fc;
+  }
+  100% {
+    box-shadow: 0 0 3px #675cfc;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .wrapUp {
   font-size: larger;
   font-weight: bold;
@@ -28,5 +57,19 @@
   color: pink;
 }
 .Selected {
-  background-color: rgb(148, 243, 215);
+  background-color: rgb(187, 186, 186);
+  animation: highlightAnimation 0.5s ease;
+}
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+}
+.heading {
+  font-size: xx-large;
+  text-align: center;
+}
+
+.btn-main {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  animation: glow 4s infinite alternate;
 }
