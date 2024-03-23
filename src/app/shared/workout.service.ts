@@ -9,7 +9,7 @@ import {
   getDocs,
   query,
 } from '@angular/fire/firestore';
-import { doc, getDoc, getFirestore } from 'firebase/firestore';
+import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 
 @Injectable({ providedIn: 'root' })
 export class WorkoutService {
@@ -20,46 +20,7 @@ export class WorkoutService {
   }
   db: any = getFirestore();
   user: any;
-  workouts: workoutBlueprint[] = [
-    {
-      workoutCreator: 'Tesciarz',
-      workoutName: 'Próbny',
-      workoutId: 1,
-      exercises: [
-        {
-          exerciseName: 'Pompki',
-          setCount: 5,
-          movementType: 'Bend',
-          accesory: false,
-        },
-        {
-          exerciseName: 'Pompki1',
-          setCount: 5,
-          movementType: 'Bend',
-          accesory: false,
-        },
-      ],
-    },
-    {
-      workoutCreator: 'Tesciarz1',
-      workoutName: 'Próbny1',
-      workoutId: 2,
-      exercises: [
-        {
-          exerciseName: 'Pompkie',
-          setCount: 4,
-          movementType: 'Squat',
-          accesory: false,
-        },
-        {
-          exerciseName: 'Pompkie1',
-          setCount: 4,
-          movementType: 'Squat',
-          accesory: false,
-        },
-      ],
-    },
-  ];
+  workouts: workoutBlueprint[] = [];
   workoutsChange = new BehaviorSubject<workoutBlueprint[]>(
     this.workouts.slice()
   );
@@ -118,9 +79,19 @@ export class WorkoutService {
 
   async getWorkoutsFromDatabase() {
     try {
-      const docRef = doc(this.db, 'users', this.user.uId);
+      const docRef = doc(
+        this.db,
+        'users',
+        this.user.uId,
+        'workouts',
+        'userWorkout'
+      );
       const docSnap = await getDoc(docRef);
-      console.log('Document written with ID: ');
+      if (docSnap.exists()) {
+        const workoutData = docSnap.data() as { workouts: workoutBlueprint[] };
+        this.workouts = workoutData.workouts;
+        this.workoutsChange.next(this.workouts.slice());
+      }
     } catch (e) {
       console.error('Error adding document: ', e);
     }
@@ -128,11 +99,14 @@ export class WorkoutService {
 
   async saveWorkoutsToDatabase() {
     try {
-      const docRef = await addDoc(collection(this.db, 'robots'), {
-        name: 'test',
-        datas: 'test2',
-      });
-      console.log('Document written with ID: ', docRef.id);
+      const docRef = doc(
+        this.db,
+        'users',
+        this.user.uId,
+        'workouts',
+        'userWorkout'
+      );
+      await setDoc(docRef, { workouts: this.workouts });
     } catch (e) {
       console.error('Error adding document: ', e);
     }

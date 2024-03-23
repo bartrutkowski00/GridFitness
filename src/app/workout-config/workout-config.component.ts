@@ -171,7 +171,7 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
   }
 
   saveData() {
-    //this.workoutsService.saveWorkoutsToDatabase();
+    this.workoutsService.saveWorkoutsToDatabase();
   }
 
   ngOnInit() {
@@ -187,6 +187,7 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
       movementType: new FormControl(null, [Validators.required]),
       accesory: new FormControl(false),
     });
+    this.workoutsService.getWorkoutsFromDatabase();
   }
   ngOnDestroy(): void {
     this.workoutsSub.unsubscribe();
