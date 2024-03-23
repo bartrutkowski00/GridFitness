@@ -7,7 +7,8 @@ import {
   signInWithPopup,
   getAuth,
 } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, getDoc, getFirestore, doc } from '@angular/fire/firestore';
+import { setDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ export class AuthServiceService {
   _user = new BehaviorSubject<User | null>(null);
 
   loggingin: boolean = false;
+  db: any = getFirestore();
 
   async googleSingIn() {
     this.loggingin = true;
@@ -26,7 +28,7 @@ export class AuthServiceService {
       const auth = getAuth();
       const result = await signInWithPopup(auth, provider);
       const credential = GoogleAuthProvider.credentialFromResult(result);
-      const user = {
+      const user: User = {
         uId: result.user.uid,
         email: result.user.email,
         photoUrl: result.user.photoURL,
@@ -35,10 +37,36 @@ export class AuthServiceService {
       };
       this._user?.next(user);
       localStorage.setItem('user', JSON.stringify(user));
+      let userIsInDatabase = await this.checkIfUserIsInDb(user);
+
+      if (!userIsInDatabase) {
+        this.exportUserToDb(user);
+      }
     } catch (err) {
       console.log(err);
     }
+
     this.loggingin = false;
+  }
+
+  async checkIfUserIsInDb(user: User) {
+    try {
+      const docRef = doc(this.db, 'users', String(user?.uId));
+      const docSnap = await getDoc(docRef);
+      return docSnap.exists();
+    } catch (e) {
+      console.error('Error: ', e);
+      return false;
+    }
+  }
+
+  async exportUserToDb(user: User) {
+    try {
+      const docRef = doc(this.db, 'users', String(user?.uId));
+      await setDoc(docRef, user);
+    } catch (e) {
+      console.error('Error: ', e);
+    }
   }
 
   logOut() {

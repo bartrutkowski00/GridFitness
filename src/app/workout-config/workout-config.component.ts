@@ -60,9 +60,7 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
 
     this.trainingSub = dialogRefTrain.afterClosed().subscribe((data) => {
       if (data === true) {
-        this.workoutsService.deleteWorkout(
-          this.selectedWorkout
-        );
+        this.workoutsService.deleteWorkout(this.selectedWorkout);
         this.selectedWorkout = undefined;
       }
     });
@@ -170,6 +168,10 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
       squat,
       hinge,
     ];
+  }
+
+  saveData() {
+    //this.workoutsService.saveWorkoutsToDatabase();
   }
 
   ngOnInit() {

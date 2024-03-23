@@ -24,6 +24,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.auth.googleSingIn();
   }
 
+  testFunc() {}
+
   ngOnInit() {
     this.auth.autoLogIn();
   }

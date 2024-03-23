@@ -2,7 +2,14 @@ import { Injectable } from '@angular/core';
 import { workoutBlueprint } from './workoutModal';
 import { BehaviorSubject, take } from 'rxjs';
 import { AuthServiceService } from '../auth/auth-service.service';
-import { Firestore } from '@angular/fire/firestore';
+import {
+  Firestore,
+  addDoc,
+  collection,
+  getDocs,
+  query,
+} from '@angular/fire/firestore';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
 
 @Injectable({ providedIn: 'root' })
 export class WorkoutService {
@@ -11,6 +18,7 @@ export class WorkoutService {
       this.user = user;
     });
   }
+  db: any = getFirestore();
   user: any;
   workouts: workoutBlueprint[] = [
     {
@@ -108,5 +116,25 @@ export class WorkoutService {
     this.workoutsChange.next(this.workouts.slice());
   }
 
-  saveToDatabase() {}
+  async getWorkoutsFromDatabase() {
+    try {
+      const docRef = doc(this.db, 'users', this.user.uId);
+      const docSnap = await getDoc(docRef);
+      console.log('Document written with ID: ');
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
+  }
+
+  async saveWorkoutsToDatabase() {
+    try {
+      const docRef = await addDoc(collection(this.db, 'robots'), {
+        name: 'test',
+        datas: 'test2',
+      });
+      console.log('Document written with ID: ', docRef.id);
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
+  }
 }
