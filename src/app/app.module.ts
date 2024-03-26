@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -23,6 +22,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ModalComponent } from './shared/modal/modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ModalDeleteTrainingComponent } from './shared/modal-delete-training/modal-delete-training.component';
+import { AddWorkoutComponent } from './add-workout/add-workout.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent,
     WorkoutConfigComponent,
     ModalComponent,
+    ModalDeleteTrainingComponent,
+    AddWorkoutComponent,
   ],
   imports: [
     ReactiveFormsModule,

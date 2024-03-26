@@ -5,6 +5,7 @@ import { WorkoutService } from '../shared/workout.service';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ModalComponent } from '../shared/modal/modal.component';
+import { ModalDeleteTrainingComponent } from '../shared/modal-delete-training/modal-delete-training.component';
 
 @Component({
   selector: 'app-workout-config',
@@ -23,11 +24,10 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
   workouts: workoutBlueprint[] = [];
   selectedWorkout: workoutBlueprint | undefined;
   movementsCount: number[] = [];
+  modalActivated: boolean = false;
 
   onClickTraining(training: any) {
     this.selectedWorkout = training;
-    console.log(training);
-    console.log(this.selectedWorkout);
   }
   onDeleteExercise(workoutIndex: number, exerciseIndex: number) {
     this.workoutsService.deleteExercise(workoutIndex, exerciseIndex);
@@ -40,11 +40,32 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
 
     const dialogRefTrain = this.dialog.open(ModalComponent, dialogConfig);
 
+    this.modalActivated = true;
     this.trainingSub = dialogRefTrain.afterClosed().subscribe((data) => {
-      console.log(data);
       this.workoutsService.addWorkout(data);
     });
   }
+
+  onDeleteTraining() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    const dialogRefTrain = this.dialog.open(
+      ModalDeleteTrainingComponent,
+      dialogConfig
+    );
+
+    this.modalActivated = true;
+    this.trainingSub = dialogRefTrain.afterClosed().subscribe((data) => {
+      if (data === true) {
+        this.workoutsService.deleteWorkout(this.selectedWorkout);
+        this.selectedWorkout = undefined;
+      }
+    });
+  }
+
   onSubmitExeForm() {
     const getMovement = function (movementType: string) {
       switch (Number(movementType)) {
@@ -72,7 +93,6 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
         getMovement(this.addWorkoutForm.value.movementType),
         this.addWorkoutForm.value.accesory
       );
-      console.log(this.addWorkoutForm);
     } else {
       alert('Fill all required fields');
     }
@@ -131,14 +151,6 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
         }
       });
     });
-    console.log([
-      horizontalPush,
-      verticalPush,
-      horizontalPull,
-      verticalPull,
-      squat,
-      hinge,
-    ]);
     return [
       horizontalPush,
       verticalPush,
@@ -147,6 +159,10 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
       squat,
       hinge,
     ];
+  }
+
+  saveData() {
+    this.workoutsService.saveWorkoutsToDatabase();
   }
 
   ngOnInit() {
@@ -162,9 +178,12 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
       movementType: new FormControl(null, [Validators.required]),
       accesory: new FormControl(false),
     });
+    this.workoutsService.getWorkoutsFromDatabase();
   }
   ngOnDestroy(): void {
     this.workoutsSub.unsubscribe();
-    this.trainingSub.unsubscribe();
+    if (this.modalActivated) {
+      this.trainingSub.unsubscribe();
+    }
   }
 }
