@@ -23,6 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ModalComponent } from './shared/modal/modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalDeleteTrainingComponent } from './shared/modal-delete-training/modal-delete-training.component';
+import { AddWorkoutComponent } from './add-workout/add-workout.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ModalDeleteTrainingComponent } from './shared/modal-delete-training/mod
     WorkoutConfigComponent,
     ModalComponent,
     ModalDeleteTrainingComponent,
+    AddWorkoutComponent,
   ],
   imports: [
     ReactiveFormsModule,

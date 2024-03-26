@@ -24,11 +24,10 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
   workouts: workoutBlueprint[] = [];
   selectedWorkout: workoutBlueprint | undefined;
   movementsCount: number[] = [];
+  modalActivated: boolean = false;
 
   onClickTraining(training: any) {
     this.selectedWorkout = training;
-    console.log(training);
-    console.log(this.selectedWorkout);
   }
   onDeleteExercise(workoutIndex: number, exerciseIndex: number) {
     this.workoutsService.deleteExercise(workoutIndex, exerciseIndex);
@@ -41,8 +40,8 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
 
     const dialogRefTrain = this.dialog.open(ModalComponent, dialogConfig);
 
+    this.modalActivated = true;
     this.trainingSub = dialogRefTrain.afterClosed().subscribe((data) => {
-      console.log(data);
       this.workoutsService.addWorkout(data);
     });
   }
@@ -58,6 +57,7 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
       dialogConfig
     );
 
+    this.modalActivated = true;
     this.trainingSub = dialogRefTrain.afterClosed().subscribe((data) => {
       if (data === true) {
         this.workoutsService.deleteWorkout(this.selectedWorkout);
@@ -93,7 +93,6 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
         getMovement(this.addWorkoutForm.value.movementType),
         this.addWorkoutForm.value.accesory
       );
-      console.log(this.addWorkoutForm);
     } else {
       alert('Fill all required fields');
     }
@@ -152,14 +151,6 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
         }
       });
     });
-    console.log([
-      horizontalPush,
-      verticalPush,
-      horizontalPull,
-      verticalPull,
-      squat,
-      hinge,
-    ]);
     return [
       horizontalPush,
       verticalPush,
@@ -191,6 +182,8 @@ export class WorkoutConfigComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.workoutsSub.unsubscribe();
-    this.trainingSub.unsubscribe();
+    if (this.modalActivated) {
+      this.trainingSub.unsubscribe();
+    }
   }
 }
