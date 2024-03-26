@@ -1,7 +1,11 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-4 trainingFrame rounded">
-      <p class="workoutTitle text-center">Przykładowy trening</p>
+    <div
+      class="col-md-4 trainingFrame rounded"
+      *ngFor="let workout of workouts"
+      (click)="test()"
+    >
+      <p class="workoutTitle text-center">{{ workout.workoutName }}</p>
       <p class="text-center">Exercises:</p>
       <div class="row">
         <div class="col-6">
